@@ -117,9 +117,15 @@ app.post('/warehouses', isLoggedIn, async (req, res) => {
     res.redirect(`/warehouses/${warehouse._id}`);
 });
 
+
 app.get('/warehouses/:id', async (req, res) => {
-    const warehouse = await Warehouse.findById(req.params.id);
-    res.render('warehouses/show', { warehouse });
+    try {
+        const warehouse = await Warehouse.findById(req.params.id).populate('author'); // Make sure to populate if needed
+        res.render('warehouses/show', { warehouse, currentUser: req.user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
 });
 
 app.get('/warehouses/:id/edit', isLoggedIn, async (req, res) => {
