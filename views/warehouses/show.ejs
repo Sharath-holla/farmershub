@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 20px;
+        }
+        .warehouse-details {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .warehouse-image {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container warehouse-details">
+    <h1 class="text-center"><%= warehouse.title %></h1>
+    <div class="text-center">
+        <img src="<%= warehouse.image %>" alt="Warehouse Image" class="warehouse-image">
+    </div>
+    <h3>Location: <%= warehouse.location %></h3>
+    <p><strong>Description:</strong> <%= warehouse.description %></p>
+    <p><strong>Goods Stored:</strong> <%= warehouse.goodsStored %></p>
+    <p><strong>Storage Capacity:</strong> <%= warehouse.storageCapacity %> kg</p>
+    <p><strong>Type:</strong> <%= warehouse.type %></p>
+    <p><strong>Price:</strong> ₹<%= warehouse.price %></p>
+    
+    <div class="text-center">
+        <a href="/warehouses" class="btn btn-primary">Back to Warehouses</a>
+        <a class="btn btn-primary">Book</a>
+         <%  if(currentUser && warehouse.author.equals(currentUser._id)){%>
+        <a href="/warehouses/<%= warehouse._id %>/edit" class="btn btn-secondary">Edit Warehouse</a>
+        <form action="/warehouses/<%= warehouse._id %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-danger">Delete Warehouse</button>
+        </form>
+        <% } %>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <title>Warehouse List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef; /* Light background color */
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007BFF; /* Main heading color */
+            margin-bottom: 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #4CAF50; /* Darker green for navbar */
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.2s;
+            margin: 0 5px;
+        }
+
+        .navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05); /* Slight scale on hover */
+        }
+
+        .warehouse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .warehouse-card {
+            background: linear-gradient(135deg, #fff, #f7f9fc); /* Gradient background */
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            transition: transform 0.2s;
+        }
+
+        .warehouse-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .warehouse-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 3px solid #4CAF50; /* Border around the image */
+        }
+
+        .warehouse-title {
+            font-size: 1.4em;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .warehouse-details {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .navbar a {
+                margin: 5px 0; /* Stack links on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div>
+                <a href="/">Home</a>
+                <a href="/warehouses/new">New Warehouse</a>
+            </div>
+            <div>
+                <% if (currentUser) { %>
+                    <a href="/logout">Logout</a>
+                <% } else { %>
+                    <a href="/login">Login</a>
+                    <a href="/register">Register</a>
+                <% } %>
+            </div>
+        </div>
+
+        <h1>Warehouse List</h1>
+        <div class="warehouse-grid">
+            <% warehouses.forEach(warehouse => { %>
+                <div class="warehouse-card">
+                    <img class="warehouse-image" src="<%= warehouse.image %>" alt="<%= warehouse.title %>">
+                    <div class="warehouse-title">
+                        <li><a href="warehouses/<%= warehouse._id %>"><%= warehouse.title %></a></li>
+                    </div>
+                    <div class="warehouse-details"><strong>Location:</strong> <%= warehouse.location %></div>
+                    <div class="warehouse-details"><strong>Goods Stored:</strong> <%= warehouse.goodsStored %></div>
+                    <div class="warehouse-details"><strong>Storage Capacity:</strong> <%= warehouse.storageCapacity %> kg</div>
+                    <div class="warehouse-details"><strong>Type:</strong> <%= warehouse.type %></div>
+                    <div class="warehouse-details"><strong>Price:</strong> ₹<%= warehouse.price %></div>
+                </div>
+            <% }) %>
+        </div>
+        <a class="back-link" href="/warehouses/new">Add New Warehouse</a>
+    </div>
+</body>
+</html>
